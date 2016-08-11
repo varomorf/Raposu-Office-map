@@ -47,9 +47,7 @@
             var user = {};
             database.ref('users/' + userId).once('value').then(function (snapshot) {
                 user = snapshot.val();
-                var p = $('span#name');
-                p.text(user.name);
-                p.animate({backgroundColor: '#af6'}).animate({backgroundColor: '#fff'});
+                $('span#name').text(user.name).effect('highlight');
             });
         });
     </script>
