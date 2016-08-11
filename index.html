@@ -2,25 +2,57 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>Raposu - Office Map</title>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"> </script>
-  <script type="text/javascript" src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
-  <script type="text/javascript">
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyAaJfmqTBHJcxvEhsLOifLNPHUsgXPPT9o",
-      authDomain: "raposu-office-map.firebaseapp.com",
-      databaseURL: "https://raposu-office-map.firebaseio.com",
-      storageBucket: "raposu-office-map.appspot.com"
-    };
-    firebase.initializeApp(config);
-    
-    // Get a reference to the database service
-    var database = firebase.database();
-  </script>
+    <title>Raposu - Office Map</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
+    <script type="text/javascript">
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAaJfmqTBHJcxvEhsLOifLNPHUsgXPPT9o",
+            authDomain: "raposu-office-map.firebaseapp.com",
+            databaseURL: "https://raposu-office-map.firebaseio.com",
+            storageBucket: "raposu-office-map.appspot.com"
+        };
+        firebase.initializeApp(config);
+
+        // Get a reference to the database service
+        var database = firebase.database();
+    </script>
 </head>
 <body>
 <h1>Welcome to Raposu</h1>
+
 <h2>Your new Office Map to de-virtualize your co-workers and simplify keeping track of their contact data.</h2>
+
+<div>
+    <p><span id="name">Loading name...</span></p>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Authenticate user
+            var email = 'foo@bar.com';
+            var password = '321654987';
+            firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log(errorCode);
+                console.log(errorMessage);
+                // ...
+            });
+            // Get user 1 and put it's name on p
+            var userId = 1;
+            var user = {};
+            database.ref('users/' + userId).once('value').then(function (snapshot) {
+                user = snapshot.val();
+                var p = $('span#name');
+                p.text(user.name);
+                p.animate({backgroundColor: '#af6'}).animate({backgroundColor: '#fff'});
+            });
+        });
+    </script>
+</div>
 </body>
 </html>
