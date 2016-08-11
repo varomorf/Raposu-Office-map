@@ -34,21 +34,25 @@
             // Authenticate user
             var email = 'foo@bar.com';
             var password = '321654987';
-            firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(errorCode);
-                console.log(errorMessage);
-                // ...
-            });
-            // Get user 1 and put it's name on p
-            var userId = 1;
-            var user = {};
-            database.ref('users/' + userId).once('value').then(function (snapshot) {
-                user = snapshot.val();
-                $('span#name').text(user.name).effect('highlight');
-            });
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                    .then(function (principal) {
+                        console.log(principal);
+                        // Get user 1 and put it's name on p
+                        var userId = principal.uid;
+                        var user = {};
+                        database.ref('users/' + userId).once('value').then(function (snapshot) {
+                            user = snapshot.val();
+                            $('span#name').text(user.name).effect('highlight');
+                        });
+                    })
+                    .catch(function (error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        console.log(errorCode);
+                        console.log(errorMessage);
+                        // ...
+                    });
         });
     </script>
 </div>
