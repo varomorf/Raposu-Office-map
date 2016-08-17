@@ -1,4 +1,6 @@
 .idea
-*.iml
 node_modules
 typings
+
+# JS Map files
+**/**/*.js.map
