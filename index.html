@@ -1,60 +1,30 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Raposu - Office Map</title>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
-    <script type="text/javascript">
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyAaJfmqTBHJcxvEhsLOifLNPHUsgXPPT9o",
-            authDomain: "raposu-office-map.firebaseapp.com",
-            databaseURL: "https://raposu-office-map.firebaseio.com",
-            storageBucket: "raposu-office-map.appspot.com"
-        };
-        firebase.initializeApp(config);
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Angular tutorial</title>
 
-        // Get a reference to the database service
-        var database = firebase.database();
-    </script>
-</head>
-<body>
-<h1>Welcome to Raposu</h1>
+    <link rel="stylesheet" href="styles.css">
 
-<h2>Your new Office Map to de-virtualize your co-workers and simplify keeping track of their contact data.</h2>
-
-<div>
-    <p><span id="name">Loading name...</span></p>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            // Authenticate user
-            var email = 'foo@bar.com';
-            var password = '321654987';
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                    .then(function (principal) {
-                        console.log(principal);
-                        // Get user 1 and put it's name on p
-                        var userId = principal.uid;
-                        var user = {};
-                        database.ref('users/' + userId).once('value').then(function (snapshot) {
-                            user = snapshot.val();
-                            $('span#name').text(user.name).effect('highlight');
-                        });
-                    })
-                    .catch(function (error) {
-                        // Handle Errors here.
-                        var errorCode = error.code;
-                        var errorMessage = error.message;
-                        console.log(errorCode);
-                        console.log(errorMessage);
-                        // ...
-                    });
+    <!-- 1. Load libraries -->
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <!-- 2. Configure SystemJS -->
+    <script src="systemjs.config.js"></script>
+    <script>
+        System.import('app').catch(function (err) {
+            console.error(err);
         });
     </script>
-</div>
+
+</head>
+<!-- 3. Display the application -->
+<body>
+<my-app>Loading...</my-app>
 </body>
 </html>
